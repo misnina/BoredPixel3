@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
             {
                 Destroy(hitdown.collider.gameObject);
                 MoveDown();
-            } else if (hitdown.collider.gameObject.tag == "Mineral")
+            } else if (hitdown.collider != null && hitdown.collider.gameObject.tag == "Mineral")
             {
                 Mineral.instance.Mine(hitdown.collider);
                 MoveDown();
