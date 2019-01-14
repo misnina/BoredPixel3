@@ -15,13 +15,15 @@ public class Mineral : MonoBehaviour
     {
         if (collider.gameObject.name == "Jade")
         {
-            Debug.Log("Mining Jade");
             Inventory.instance.jade++;
         }
         else if (collider.gameObject.name == "Cobalt")
         {
-            Debug.Log("Mining Cobalt");
             Inventory.instance.cobalt++;
+        }
+        else if (collider.gameObject.name == "Ruby")
+        {
+            Inventory.instance.ruby++;
         }
     }
 
