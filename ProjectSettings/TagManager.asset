@@ -4,7 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Monster
+  - Block
+  - Mineral
   layers:
   - Default
   - TransparentFX

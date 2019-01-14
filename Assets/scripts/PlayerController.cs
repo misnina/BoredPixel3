@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed;
     private Rigidbody2D rb;
     private LerpHelper lerp;
 
     private bool moveFinished = true;
     private bool falling;
+
+    RaycastHit2D hitdown;
+    RaycastHit2D hitup;
+    RaycastHit2D hitright;
+    RaycastHit2D hitleft;
 
     void Awake()
     {
@@ -19,10 +23,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        RaycastHit2D hitdown = Physics2D.Raycast(transform.position, Vector2.down, 1);
-        RaycastHit2D hitup = Physics2D.Raycast(transform.position, Vector2.up, 1);
-        RaycastHit2D hitright = Physics2D.Raycast(transform.position, Vector2.right, 1);
-        RaycastHit2D hitleft = Physics2D.Raycast(transform.position, Vector2.left, 1);
+
+         hitdown = Physics2D.Raycast(transform.position, Vector2.down, 1);
+        hitup = Physics2D.Raycast(transform.position, Vector2.up, 1);
+        hitright = Physics2D.Raycast(transform.position, Vector2.right, 1);
+        hitleft = Physics2D.Raycast(transform.position, Vector2.left, 1);
 
         //Fly Up
         if (Input.GetKey(KeyCode.W) && moveFinished)
@@ -39,12 +44,14 @@ public class PlayerController : MonoBehaviour
         //Dig Down
         if (Input.GetKey(KeyCode.S) && moveFinished)
         {
-            if (hitdown.collider != null)
+            if (hitdown.collider != null && hitdown.collider.gameObject.tag == "Block")
             {
                 Destroy(hitdown.collider.gameObject);
-                StartMove();
-                lerp.endPosition = transform.position +  Vector3.down;
-                LerpSetup();
+                MoveDown();
+            } else if (hitdown.collider.gameObject.tag == "Mineral")
+            {
+                Mineral.instance.Mine(hitdown.collider);
+                MoveDown();
             }
 
         }
@@ -52,12 +59,18 @@ public class PlayerController : MonoBehaviour
         //Dig Right
         if (Input.GetKey(KeyCode.D) && moveFinished)
         {
-            if (hitright.collider != null && !falling)
+            if (hitright.collider != null && hitright.collider.gameObject.tag == "Block" && !falling)
             {
+                Destroy(hitright.collider.gameObject);
+            }
+            else if (hitright.collider != null &&  hitright.collider.gameObject.tag == "Mineral" && !falling)
+            {
+                Mineral.instance.Mine(hitright.collider);
                 Destroy(hitright.collider.gameObject);
             }
             else if (hitright.collider == null)
             {
+                
                 StartMove();
                 lerp.endPosition = transform.position + Vector3.right;
                 LerpSetup();
@@ -68,8 +81,13 @@ public class PlayerController : MonoBehaviour
         //Dig left
         if (Input.GetKey(KeyCode.A) && moveFinished)
         {
-            if (hitleft.collider != null && !falling)
+            if (hitleft.collider != null && hitleft.collider.gameObject.tag == "Block" && !falling)
             {
+                Destroy(hitleft.collider.gameObject);
+            }
+            else if (hitleft.collider != null && hitleft.collider.gameObject.tag == "Mineral" && !falling)
+            {
+                Mineral.instance.Mine(hitleft.collider);
                 Destroy(hitleft.collider.gameObject);
             }
             else if (hitleft.collider == null)
@@ -89,6 +107,7 @@ public class PlayerController : MonoBehaviour
             {
                 StartMove();
                 lerp.endPosition = transform.position + Vector3.down;
+                //lerp.lerpTime = 0.1f;
                 LerpSetup();
             }
 
@@ -98,6 +117,14 @@ public class PlayerController : MonoBehaviour
             falling = false;
         }
 
+    }
+
+    private void MoveDown()
+    {
+        Destroy(hitdown.collider.gameObject);
+        StartMove();
+        lerp.endPosition = transform.position + Vector3.down;
+        LerpSetup();
     }
 
     private void LerpSetup()
@@ -116,6 +143,5 @@ public class PlayerController : MonoBehaviour
     {
         moveFinished = true;
     }
-
    
 }
