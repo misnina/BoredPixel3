@@ -27,7 +27,7 @@ public class LerpHelper : MonoBehaviour
         
     }
 
-    public Vector3 Lerp(Vector3 start, Vector3 end, float timeStartedLerping, float lerpTime = 2)
+    public Vector3 Lerp(Vector3 start, Vector3 end, float timeStartedLerping, float lerpTime = 1)
     {
         float timeSinceStart = Time.time - timeStartedLerping;
 

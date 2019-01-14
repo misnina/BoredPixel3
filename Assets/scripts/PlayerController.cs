@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private LerpHelper lerp;
 
+    private bool moveFinished = true;
+    private bool flying;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -16,17 +19,31 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        RaycastHit2D hitdown = Physics2D.Raycast(transform.position, Vector2.down);
-        RaycastHit2D hitup = Physics2D.Raycast(transform.position, Vector2.up);
-        RaycastHit2D hitright = Physics2D.Raycast(transform.position, Vector2.right);
-        RaycastHit2D hitleft = Physics2D.Raycast(transform.position, Vector2.left);
+        RaycastHit2D hitdown = Physics2D.Raycast(transform.position, Vector2.down, 1);
+        RaycastHit2D hitup = Physics2D.Raycast(transform.position, Vector2.up, 1);
+        RaycastHit2D hitright = Physics2D.Raycast(transform.position, Vector2.right, 1);
+        RaycastHit2D hitleft = Physics2D.Raycast(transform.position, Vector2.left, 1);
+
+        //Fly Up
+        if (Input.GetKey(KeyCode.W) && moveFinished)
+        {
+            if (hitup.collider == null)
+            {
+                StartMove();
+                lerp.startPosition = transform.position;
+                lerp.endPosition = transform.position + Vector3.up;
+                lerp.StartLerping();
+
+            }
+        }
 
         //Dig Down
-        if (Input.GetKeyUp(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) && moveFinished)
         {
             if (hitdown.collider != null)
             {
                 Destroy(hitdown.collider.gameObject);
+                StartMove();
                 lerp.startPosition = transform.position;
                 lerp.endPosition = transform.position +  Vector3.down;
                 lerp.StartLerping();
@@ -35,51 +52,54 @@ public class PlayerController : MonoBehaviour
         }
 
         //Dig Right
-        if (Input.GetKeyUp(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) && moveFinished)
         {
             if (hitright.collider != null)
             {
                 Destroy(hitright.collider.gameObject);
-                lerp.startPosition = transform.position;
-                lerp.endPosition = transform.position + Vector3.right;
-                lerp.StartLerping();
             }
+            StartMove();
+            lerp.startPosition = transform.position;
+            lerp.endPosition = transform.position + Vector3.right;
+            lerp.StartLerping();
 
         }
 
         //Dig left
-        if (Input.GetKeyUp(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) && moveFinished)
         {
             if (hitleft.collider != null)
             {
                 Destroy(hitleft.collider.gameObject);
-                lerp.startPosition = transform.position;
-                lerp.endPosition = transform.position + Vector3.left;
-                lerp.StartLerping();
             }
-
-        }
-
-
-        //Fly Up
-        if (Input.GetKey(KeyCode.W))
-        {
-            if (hitdown.collider != null)
-            {
-                lerp.startPosition = transform.position;
-                lerp.endPosition = transform.position + Vector3.up;
-                lerp.StartLerping();
-            }
+            StartMove();
+            lerp.startPosition = transform.position;
+            lerp.endPosition = transform.position + Vector3.left;
+            lerp.StartLerping();
 
         }
 
         //fall if nothing under you
-        if (hitdown.collider == null && !Input.GetKey(KeyCode.W))
+        if (hitdown.collider == null && moveFinished)
         {
+            StartMove();
             lerp.startPosition = transform.position;
             lerp.endPosition = transform.position + Vector3.down;
             lerp.StartLerping();
         }
 
     }
+
+    private void StartMove()
+    {
+        moveFinished = false;
+        Invoke("EndMove", 0.2f);
+    }
+
+    private void EndMove()
+    {
+        moveFinished = true;
+    }
+
+   
 }
