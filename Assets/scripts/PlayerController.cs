@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     private LerpHelper lerp;
 
     private bool moveFinished = true;
-    private bool flying;
+    private bool falling;
 
     void Awake()
     {
@@ -30,9 +30,8 @@ public class PlayerController : MonoBehaviour
             if (hitup.collider == null)
             {
                 StartMove();
-                lerp.startPosition = transform.position;
                 lerp.endPosition = transform.position + Vector3.up;
-                lerp.StartLerping();
+                LerpSetup();
 
             }
         }
@@ -44,9 +43,8 @@ public class PlayerController : MonoBehaviour
             {
                 Destroy(hitdown.collider.gameObject);
                 StartMove();
-                lerp.startPosition = transform.position;
                 lerp.endPosition = transform.position +  Vector3.down;
-                lerp.StartLerping();
+                LerpSetup();
             }
 
         }
@@ -54,40 +52,58 @@ public class PlayerController : MonoBehaviour
         //Dig Right
         if (Input.GetKey(KeyCode.D) && moveFinished)
         {
-            if (hitright.collider != null)
+            if (hitright.collider != null && !falling)
             {
                 Destroy(hitright.collider.gameObject);
             }
-            StartMove();
-            lerp.startPosition = transform.position;
-            lerp.endPosition = transform.position + Vector3.right;
-            lerp.StartLerping();
+            else if (hitright.collider == null)
+            {
+                StartMove();
+                lerp.endPosition = transform.position + Vector3.right;
+                LerpSetup();
+            }
 
         }
 
         //Dig left
         if (Input.GetKey(KeyCode.A) && moveFinished)
         {
-            if (hitleft.collider != null)
+            if (hitleft.collider != null && !falling)
             {
                 Destroy(hitleft.collider.gameObject);
             }
-            StartMove();
-            lerp.startPosition = transform.position;
-            lerp.endPosition = transform.position + Vector3.left;
-            lerp.StartLerping();
+            else if (hitleft.collider == null)
+            {
+                StartMove();
+                lerp.endPosition = transform.position + Vector3.left;
+                LerpSetup();
+            }
 
         }
 
         //fall if nothing under you
-        if (hitdown.collider == null && moveFinished)
+        if (hitdown.collider == null)
         {
-            StartMove();
-            lerp.startPosition = transform.position;
-            lerp.endPosition = transform.position + Vector3.down;
-            lerp.StartLerping();
+            falling = true;
+            if (moveFinished)
+            {
+                StartMove();
+                lerp.endPosition = transform.position + Vector3.down;
+                LerpSetup();
+            }
+
+        }
+        else
+        {
+            falling = false;
         }
 
+    }
+
+    private void LerpSetup()
+    {
+        lerp.startPosition = transform.position;
+        lerp.StartLerping();
     }
 
     private void StartMove()
