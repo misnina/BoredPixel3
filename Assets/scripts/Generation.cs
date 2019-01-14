@@ -23,7 +23,7 @@ public class Generation : MonoBehaviour
         {
             for (int y = 0; y < map.GetUpperBound(1); y++)
             {
-                bool empty = Random.value > 0.5f;
+                bool empty = Random.value > 0.75f;
                 if (empty)
                 {
                     map[x, y] = 0;
