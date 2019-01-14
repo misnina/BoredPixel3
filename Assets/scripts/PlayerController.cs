@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
         //Fly Up
         if (Input.GetKey(KeyCode.W) && moveFinished)
         {
+            Inventory.instance.fuel--;
             if (hitup.collider == null)
             {
                 StartMove();
@@ -44,6 +45,7 @@ public class PlayerController : MonoBehaviour
         //Dig Down
         if (Input.GetKey(KeyCode.S) && moveFinished)
         {
+            Inventory.instance.fuel--;
             if (hitdown.collider != null && hitdown.collider.gameObject.tag == "Block")
             {
                 Destroy(hitdown.collider.gameObject);
@@ -51,6 +53,7 @@ public class PlayerController : MonoBehaviour
             } else if (hitdown.collider != null && hitdown.collider.gameObject.tag == "Mineral")
             {
                 Mineral.instance.Mine(hitdown.collider);
+                hitdown.collider.GetComponent<Destroy>().destroyed = true;
                 MoveDown();
             }
 
@@ -59,14 +62,20 @@ public class PlayerController : MonoBehaviour
         //Dig Right
         if (Input.GetKey(KeyCode.D) && moveFinished)
         {
+            Inventory.instance.fuel--;
             if (hitright.collider != null && hitright.collider.gameObject.tag == "Block" && !falling)
             {
                 Destroy(hitright.collider.gameObject);
             }
             else if (hitright.collider != null &&  hitright.collider.gameObject.tag == "Mineral" && !falling)
             {
+
                 Mineral.instance.Mine(hitright.collider);
-                Destroy(hitright.collider.gameObject);
+                Mineral.instance.Mine(hitdown.collider);
+                hitright.collider.GetComponent<Destroy>().destroyed = true;
+                StartMove();
+                lerp.endPosition = transform.position + Vector3.right;
+                LerpSetup();
             }
             else if (hitright.collider == null)
             {
@@ -81,6 +90,7 @@ public class PlayerController : MonoBehaviour
         //Dig left
         if (Input.GetKey(KeyCode.A) && moveFinished)
         {
+            Inventory.instance.fuel--;
             if (hitleft.collider != null && hitleft.collider.gameObject.tag == "Block" && !falling)
             {
                 Destroy(hitleft.collider.gameObject);
@@ -88,7 +98,11 @@ public class PlayerController : MonoBehaviour
             else if (hitleft.collider != null && hitleft.collider.gameObject.tag == "Mineral" && !falling)
             {
                 Mineral.instance.Mine(hitleft.collider);
-                Destroy(hitleft.collider.gameObject);
+                Mineral.instance.Mine(hitdown.collider);
+                hitleft.collider.GetComponent<Destroy>().destroyed = true;
+                StartMove();
+                lerp.endPosition = transform.position + Vector3.left;
+                LerpSetup();
             }
             else if (hitleft.collider == null)
             {
@@ -121,7 +135,6 @@ public class PlayerController : MonoBehaviour
 
     private void MoveDown()
     {
-        Destroy(hitdown.collider.gameObject);
         StartMove();
         lerp.endPosition = transform.position + Vector3.down;
         LerpSetup();

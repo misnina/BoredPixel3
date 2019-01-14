@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 5230554335081355533}
   - component: {fileID: 5230554335081355535}
   - component: {fileID: 5230554335081355532}
+  - component: {fileID: 8994375621682729629}
+  - component: {fileID: 9151223657816115104}
   m_Layer: 0
-  m_Name: Mineral
+  m_Name: Jade
   m_TagString: Mineral
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300002, guid: 833eb96d79b18434f91cfa622e76dbcb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fc718eb55c5e68d469693354e87609df, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -106,3 +108,35 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &8994375621682729629
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5230554335081355538}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e2bafde64bc547b4387cf16abde67324, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &9151223657816115104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5230554335081355538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9e7b3acea619554b9187242037749b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyed: 0

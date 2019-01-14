@@ -16,12 +16,12 @@ public class Mineral : MonoBehaviour
         if (collider.gameObject.name == "Jade")
         {
             Debug.Log("Mining Jade");
-            //add to inventory
+            Inventory.instance.jade++;
         }
         else if (collider.gameObject.name == "Cobalt")
         {
             Debug.Log("Mining Cobalt");
-            //add to inventory
+            Inventory.instance.cobalt++;
         }
     }
 
