@@ -58,17 +58,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f2aa2946e4db494582e2540c485a697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 0
+  money: 500
   fuel: 30
+  fuelMax: 100
   jade: 0
   cobalt: 0
   ruby: 0
-  jadeHold: 10
-  cobaltHold: 10
-  rubyHold: 5
+  hold: 5
   fuelValue: {fileID: 0}
-  jadeAmount: {fileID: 0}
-  cobaltAmount: {fileID: 0}
+  moneyAmount: {fileID: 0}
   rubyAmount: {fileID: 0}
 --- !u!114 &24009475
 MonoBehaviour:

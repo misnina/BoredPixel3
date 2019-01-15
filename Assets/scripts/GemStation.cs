@@ -9,7 +9,7 @@ public class GemStation : MonoBehaviour
     {
         if (other.gameObject.name == "Player")
         {
-            Inventory.instance.money += Inventory.instance.jade + Inventory.instance.cobalt + Inventory.instance.ruby;
+            Inventory.instance.money += Inventory.instance.jade * 10 + Inventory.instance.cobalt * 20 + Inventory.instance.ruby * 50;
             Inventory.instance.jade = 0;
             Inventory.instance.cobalt = 0;
             Inventory.instance.ruby = 0;
