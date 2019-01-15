@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
     private LerpHelper lerp;
+    private Animator anim;
+    private SpriteRenderer sp;
 
     private bool moveFinished = true;
     private bool falling;
@@ -19,6 +21,8 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         lerp = GetComponent<LerpHelper>();
+        anim = GetComponent<Animator>();
+        sp = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -29,10 +33,39 @@ public class PlayerController : MonoBehaviour
         hitright = Physics2D.Raycast(transform.position, Vector2.right, 1);
         hitleft = Physics2D.Raycast(transform.position, Vector2.left, 1);
 
+        //Animators
+        if (Input.GetKey(KeyCode.W))
+        {
+            anim.SetTrigger("startflying");
+            anim.SetBool("flying", true);
+        }
+        else
+        {
+            anim.SetBool("flying", false);
+            anim.ResetTrigger("startflying");
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            sp.flipX = false;
+            anim.SetBool("digging", true);
+            
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            sp.flipX = true;
+            anim.SetBool("digging", true);
+        }
+        else
+        {
+            anim.SetBool("digging", false);
+        }
+
+
         //Fly Up
         if (Input.GetKey(KeyCode.W) && moveFinished)
         {
-           
+            
             if (hitup.collider == null)
             {
                 Inventory.instance.fuel--;
@@ -42,7 +75,6 @@ public class PlayerController : MonoBehaviour
 
             }
         }
-
         //Dig Down
         if (Input.GetKey(KeyCode.S) && moveFinished)
         {
