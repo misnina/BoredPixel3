@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
 
     private bool moveFinished = true;
     private bool falling;
+    private float fallingSpeed;
+    private float speed = 0.2f;
 
     RaycastHit2D hitdown;
     RaycastHit2D hitup;
@@ -71,12 +73,13 @@ public class PlayerController : MonoBehaviour
                 Inventory.instance.fuel--;
                 StartMove();
                 lerp.endPosition = transform.position + Vector3.up;
+                lerp.lerpTime = speed;
                 LerpSetup();
 
             }
         }
         //Dig Down
-        if (Input.GetKey(KeyCode.S) && moveFinished)
+        if (Input.GetKey(KeyCode.S) && moveFinished && !falling)
         {
            
             if (hitdown.collider != null && hitdown.collider.gameObject.tag == "Block")
@@ -95,13 +98,17 @@ public class PlayerController : MonoBehaviour
         }
 
         //Dig Right
-        if (Input.GetKey(KeyCode.D) && moveFinished)
+        if (Input.GetKey(KeyCode.D) && moveFinished && !falling)
         {
             Inventory.instance.fuel--;
             if (hitright.collider != null && hitright.collider.gameObject.tag == "Block" && !falling)
             {
                 Inventory.instance.fuel--;
                 hitright.collider.GetComponent<Destroy>().destroyed = true;
+                StartMove();
+                lerp.endPosition = transform.position + Vector3.right;
+                lerp.lerpTime = speed;
+                LerpSetup();
             }
             else if (hitright.collider != null &&  hitright.collider.gameObject.tag == "Mineral" && !falling)
             {
@@ -111,6 +118,7 @@ public class PlayerController : MonoBehaviour
                 hitright.collider.GetComponent<Destroy>().destroyed = true;
                 StartMove();
                 lerp.endPosition = transform.position + Vector3.right;
+                lerp.lerpTime = speed;
                 LerpSetup();
             }
             else if (hitright.collider == null)
@@ -118,19 +126,24 @@ public class PlayerController : MonoBehaviour
                 Inventory.instance.fuel--;
                 StartMove();
                 lerp.endPosition = transform.position + Vector3.right;
+                lerp.lerpTime = speed;
                 LerpSetup();
             }
 
         }
 
         //Dig left
-        if (Input.GetKey(KeyCode.A) && moveFinished)
+        if (Input.GetKey(KeyCode.A) && moveFinished && !falling)
         {
             Inventory.instance.fuel--;
             if (hitleft.collider != null && hitleft.collider.gameObject.tag == "Block" && !falling)
             {
                 Inventory.instance.fuel--;
                 hitleft.collider.GetComponent<Destroy>().destroyed = true;
+                StartMove();
+                lerp.endPosition = transform.position + Vector3.left;
+                lerp.lerpTime = speed;
+                LerpSetup();
             }
             else if (hitleft.collider != null && hitleft.collider.gameObject.tag == "Mineral" && !falling)
             {
@@ -140,6 +153,7 @@ public class PlayerController : MonoBehaviour
                 hitleft.collider.GetComponent<Destroy>().destroyed = true;
                 StartMove();
                 lerp.endPosition = transform.position + Vector3.left;
+                lerp.lerpTime = speed;
                 LerpSetup();
             }
             else if (hitleft.collider == null)
@@ -147,24 +161,25 @@ public class PlayerController : MonoBehaviour
                 Inventory.instance.fuel--;
                 StartMove();
                 lerp.endPosition = transform.position + Vector3.left;
+                lerp.lerpTime = speed;
                 LerpSetup();
             }
 
         }
 
         //fall if nothing under you
-        if (hitdown.collider == null)
+        if  (moveFinished)
         {
-            falling = true;
-            if (moveFinished)
-            {
-
-                StartMove();
+            if (hitdown.collider == null) 
+             {
+                falling = true;
+                fallingSpeed = 0.1f;
+                FallingMove();
                 lerp.endPosition = transform.position + Vector3.down;
-                //lerp.lerpTime = 0.1f;
+                lerp.lerpTime = fallingSpeed;
                 LerpSetup();
             }
-
+                
         }
         else
         {
@@ -190,6 +205,12 @@ public class PlayerController : MonoBehaviour
     {
         moveFinished = false;
         Invoke("EndMove", 0.2f);
+    }
+
+    private void FallingMove()
+    {
+        moveFinished = false;
+        Invoke("EndMove", fallingSpeed);
     }
 
     private void EndMove()

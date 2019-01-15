@@ -26,6 +26,9 @@ public class Mineral : MonoBehaviour
             else if (collider.gameObject.name == "Ruby")
             {
                 Inventory.instance.ruby++;
+            } else
+            {
+                //Do Nothing
             }
         }
 
