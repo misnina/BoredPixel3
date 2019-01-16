@@ -8,8 +8,12 @@ public class UIManager : MonoBehaviour
     public Text text;
     public static UIManager instance;
 
+    public GameObject shopUI;
+    public GameObject gameUI;
+
     private void Awake()
     {
         instance = this;
     }
+
 }

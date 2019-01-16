@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     public Vector3 bottomLeft;
     public Vector3 topRight;
 
-    private static PlayerController instance;
+    public static PlayerController instance;
 
 
     void Awake()

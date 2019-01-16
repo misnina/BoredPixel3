@@ -8,6 +8,7 @@ public class UpgradeFuel : MonoBehaviour
 
     public int cost;
     public int newFuelMax;
+    public int newOreHold;
     [TextArea]
     public string description;
     private Button button;
@@ -15,7 +16,6 @@ public class UpgradeFuel : MonoBehaviour
     public void ChangeText()
     {
         button = GetComponent<Button>();
-        Debug.Log("I've been moused over");
         UIManager.instance.text.text = description;
     }
 
@@ -25,6 +25,16 @@ public class UpgradeFuel : MonoBehaviour
         {
             Inventory.instance.money -= cost;
             Inventory.instance.fuelMax = newFuelMax;
+            button.interactable = false;
+        }
+    }
+
+    public void OreHold()
+    {
+        if (Inventory.instance.money >= cost)
+        {
+            Inventory.instance.money -= cost;
+            Inventory.instance.hold = newOreHold;
             button.interactable = false;
         }
     }

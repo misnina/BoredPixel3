@@ -59,8 +59,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   money: 500
-  fuel: 30
-  fuelMax: 100
+  fuel: 50
+  fuelMax: 50
   jade: 0
   cobalt: 0
   ruby: 0
@@ -96,7 +96,9 @@ MonoBehaviour:
   - {fileID: 5230554335081355538, guid: 19158fe20d7c112478b75a3e077c8df6, type: 3}
   - {fileID: 5230554335081355538, guid: 19158fe20d7c112478b75a3e077c8df6, type: 3}
   - {fileID: 6318525874947366666, guid: 783c0043105c66140835d12d2cade39b, type: 3}
-  - {fileID: 6318525874947366666, guid: 783c0043105c66140835d12d2cade39b, type: 3}
+  - {fileID: 3581625995890735605, guid: b7fb2e2347179514da76357b38094a51, type: 3}
+  - {fileID: 3581625995890735605, guid: b7fb2e2347179514da76357b38094a51, type: 3}
+  - {fileID: 3581625995890735605, guid: b7fb2e2347179514da76357b38094a51, type: 3}
   - {fileID: 3581625995890735605, guid: b7fb2e2347179514da76357b38094a51, type: 3}
   - {fileID: 1756699707349009550, guid: 1e1c1c6e26634cc4391633a06062a82b, type: 3}
   - {fileID: 1756699707349009550, guid: 1e1c1c6e26634cc4391633a06062a82b, type: 3}
@@ -111,8 +113,9 @@ MonoBehaviour:
   - {fileID: 1756699707349009550, guid: 1e1c1c6e26634cc4391633a06062a82b, type: 3}
   - {fileID: 1756699707349009550, guid: 1e1c1c6e26634cc4391633a06062a82b, type: 3}
   - {fileID: 1756699707349009550, guid: 1e1c1c6e26634cc4391633a06062a82b, type: 3}
-  - {fileID: 1756699707349009550, guid: 1e1c1c6e26634cc4391633a06062a82b, type: 3}
-  width: 100
+  - {fileID: 859673993090155020, guid: f24f1c8b14d26d748a1665065c189f5e, type: 3}
+  - {fileID: 859673993090155020, guid: f24f1c8b14d26d748a1665065c189f5e, type: 3}
+  width: 50
   height: 100
 --- !u!114 &2788613770937884513
 MonoBehaviour:
