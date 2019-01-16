@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private bool falling;
     private float fallingSpeed;
     private float speed = 0.2f;
+    public bool canMove = true;
 
     RaycastHit2D hitdown;
     RaycastHit2D hitup;
@@ -23,9 +24,13 @@ public class PlayerController : MonoBehaviour
     public Vector3 bottomLeft;
     public Vector3 topRight;
 
+    private static PlayerController instance;
+
 
     void Awake()
     {
+        instance = this;
+
         rb = GetComponent<Rigidbody2D>();
         lerp = GetComponent<LerpHelper>();
         anim = GetComponent<Animator>();
@@ -37,168 +42,172 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, bottomLeft.x, topRight.x), Mathf.Clamp(transform.position.y, bottomLeft.y, topRight.y), transform.position.z);
+        if  (canMove)
+        {
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, bottomLeft.x, topRight.x), Mathf.Clamp(transform.position.y, bottomLeft.y, topRight.y), transform.position.z);
 
-        hitdown = Physics2D.Raycast(transform.position, Vector2.down, 1);
-        hitup = Physics2D.Raycast(transform.position, Vector2.up, 1);
-        hitright = Physics2D.Raycast(transform.position, Vector2.right, 1);
-        hitleft = Physics2D.Raycast(transform.position, Vector2.left, 1);
+            hitdown = Physics2D.Raycast(transform.position, Vector2.down, 1);
+            hitup = Physics2D.Raycast(transform.position, Vector2.up, 1);
+            hitright = Physics2D.Raycast(transform.position, Vector2.right, 1);
+            hitleft = Physics2D.Raycast(transform.position, Vector2.left, 1);
 
-        //Animators
+            //Animators
 
-        if (Input.GetKey(KeyCode.W))
-        {
-            anim.SetTrigger("startflying");
-            anim.SetBool("flying", true);
-        }
-        else
-        {
-            anim.SetBool("flying", false);
-            anim.ResetTrigger("startflying");
-         }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            sp.flipX = false;
-            anim.SetBool("digging", true);
-            
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            sp.flipX = true;
-            anim.SetBool("digging", true);
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            anim.SetBool("downdigging", true);
-        }
-        else
-        {
-            anim.SetBool("downdigging", false);
-            anim.SetBool("digging", false);
-        }
-
-
-        //Fly Up
-        if (Input.GetKey(KeyCode.W) && moveFinished)
-        {
-            
-            if (hitup.collider == null)
+            if (Input.GetKey(KeyCode.W))
             {
-                Inventory.instance.fuel--;
-                StartMove();
-                lerp.endPosition = transform.position + Vector3.up;
-                lerp.lerpTime = speed;
-                LerpSetup();
-
+                anim.SetTrigger("startflying");
+                anim.SetBool("flying", true);
             }
-        }
-        //Dig Down
-        if (Input.GetKey(KeyCode.S) && moveFinished && !falling)
-        {
-           
-            if (hitdown.collider != null && hitdown.collider.gameObject.tag == "Block")
+            else
             {
-                Inventory.instance.fuel--;
-                hitdown.collider.GetComponent<Destroy>().destroyed = true;
-                MoveDown();
-            } else if (hitdown.collider != null && hitdown.collider.gameObject.tag == "Mineral")
-            {
-                Inventory.instance.fuel--;
-                Mineral.instance.Mine(hitdown.collider);
-                hitdown.collider.GetComponent<Destroy>().destroyed = true;
-                MoveDown();
+                anim.SetBool("flying", false);
+                anim.ResetTrigger("startflying");
             }
 
-        }
+            if (Input.GetKey(KeyCode.D))
+            {
+                sp.flipX = false;
+                anim.SetBool("digging", true);
 
-        //Dig Right
-        if (Input.GetKey(KeyCode.D) && moveFinished && !falling)
-        {
-            Inventory.instance.fuel--;
-            if (hitright.collider != null && hitright.collider.gameObject.tag == "Block" && !falling)
-            {
-                Inventory.instance.fuel--;
-                hitright.collider.GetComponent<Destroy>().destroyed = true;
-                StartMove();
-                lerp.endPosition = transform.position + Vector3.right;
-                lerp.lerpTime = speed;
-                LerpSetup();
             }
-            else if (hitright.collider != null &&  hitright.collider.gameObject.tag == "Mineral" && !falling)
+            else if (Input.GetKey(KeyCode.A))
             {
-                Inventory.instance.fuel--;
-                Mineral.instance.Mine(hitright.collider);
-                Mineral.instance.Mine(hitdown.collider);
-                hitright.collider.GetComponent<Destroy>().destroyed = true;
-                StartMove();
-                lerp.endPosition = transform.position + Vector3.right;
-                lerp.lerpTime = speed;
-                LerpSetup();
+                sp.flipX = true;
+                anim.SetBool("digging", true);
             }
-            else if (hitright.collider == null)
+            else if (Input.GetKey(KeyCode.S))
             {
-                Inventory.instance.fuel--;
-                StartMove();
-                lerp.endPosition = transform.position + Vector3.right;
-                lerp.lerpTime = speed;
-                LerpSetup();
+                anim.SetBool("downdigging", true);
+            }
+            else
+            {
+                anim.SetBool("downdigging", false);
+                anim.SetBool("digging", false);
             }
 
-        }
 
-        //Dig left
-        if (Input.GetKey(KeyCode.A) && moveFinished && !falling)
-        {
-            Inventory.instance.fuel--;
-            if (hitleft.collider != null && hitleft.collider.gameObject.tag == "Block" && !falling)
+            //Fly Up
+            if (Input.GetKey(KeyCode.W) && moveFinished)
+            {
+
+                if (hitup.collider == null)
+                {
+                    Inventory.instance.fuel--;
+                    StartMove();
+                    lerp.endPosition = transform.position + Vector3.up;
+                    lerp.lerpTime = speed;
+                    LerpSetup();
+
+                }
+            }
+            //Dig Down
+            if (Input.GetKey(KeyCode.S) && moveFinished && !falling)
+            {
+
+                if (hitdown.collider != null && hitdown.collider.gameObject.tag == "Block")
+                {
+                    Inventory.instance.fuel--;
+                    hitdown.collider.GetComponent<Destroy>().destroyed = true;
+                    MoveDown();
+                }
+                else if (hitdown.collider != null && hitdown.collider.gameObject.tag == "Mineral")
+                {
+                    Inventory.instance.fuel--;
+                    Mineral.instance.Mine(hitdown.collider);
+                    hitdown.collider.GetComponent<Destroy>().destroyed = true;
+                    MoveDown();
+                }
+
+            }
+
+            //Dig Right
+            if (Input.GetKey(KeyCode.D) && moveFinished && !falling)
             {
                 Inventory.instance.fuel--;
-                hitleft.collider.GetComponent<Destroy>().destroyed = true;
-                StartMove();
-                lerp.endPosition = transform.position + Vector3.left;
-                lerp.lerpTime = speed;
-                LerpSetup();
-            }
-            else if (hitleft.collider != null && hitleft.collider.gameObject.tag == "Mineral" && !falling)
-            {
-                Inventory.instance.fuel--;
-                Mineral.instance.Mine(hitleft.collider);
-                Mineral.instance.Mine(hitdown.collider);
-                hitleft.collider.GetComponent<Destroy>().destroyed = true;
-                StartMove();
-                lerp.endPosition = transform.position + Vector3.left;
-                lerp.lerpTime = speed;
-                LerpSetup();
-            }
-            else if (hitleft.collider == null)
-            {
-                Inventory.instance.fuel--;
-                StartMove();
-                lerp.endPosition = transform.position + Vector3.left;
-                lerp.lerpTime = speed;
-                LerpSetup();
+                if (hitright.collider != null && hitright.collider.gameObject.tag == "Block" && !falling)
+                {
+                    Inventory.instance.fuel--;
+                    hitright.collider.GetComponent<Destroy>().destroyed = true;
+                    StartMove();
+                    lerp.endPosition = transform.position + Vector3.right;
+                    lerp.lerpTime = speed;
+                    LerpSetup();
+                }
+                else if (hitright.collider != null && hitright.collider.gameObject.tag == "Mineral" && !falling)
+                {
+                    Inventory.instance.fuel--;
+                    Mineral.instance.Mine(hitright.collider);
+                    Mineral.instance.Mine(hitdown.collider);
+                    hitright.collider.GetComponent<Destroy>().destroyed = true;
+                    StartMove();
+                    lerp.endPosition = transform.position + Vector3.right;
+                    lerp.lerpTime = speed;
+                    LerpSetup();
+                }
+                else if (hitright.collider == null)
+                {
+                    Inventory.instance.fuel--;
+                    StartMove();
+                    lerp.endPosition = transform.position + Vector3.right;
+                    lerp.lerpTime = speed;
+                    LerpSetup();
+                }
+
             }
 
-        }
+            //Dig left
+            if (Input.GetKey(KeyCode.A) && moveFinished && !falling)
+            {
+                Inventory.instance.fuel--;
+                if (hitleft.collider != null && hitleft.collider.gameObject.tag == "Block" && !falling)
+                {
+                    Inventory.instance.fuel--;
+                    hitleft.collider.GetComponent<Destroy>().destroyed = true;
+                    StartMove();
+                    lerp.endPosition = transform.position + Vector3.left;
+                    lerp.lerpTime = speed;
+                    LerpSetup();
+                }
+                else if (hitleft.collider != null && hitleft.collider.gameObject.tag == "Mineral" && !falling)
+                {
+                    Inventory.instance.fuel--;
+                    Mineral.instance.Mine(hitleft.collider);
+                    Mineral.instance.Mine(hitdown.collider);
+                    hitleft.collider.GetComponent<Destroy>().destroyed = true;
+                    StartMove();
+                    lerp.endPosition = transform.position + Vector3.left;
+                    lerp.lerpTime = speed;
+                    LerpSetup();
+                }
+                else if (hitleft.collider == null)
+                {
+                    Inventory.instance.fuel--;
+                    StartMove();
+                    lerp.endPosition = transform.position + Vector3.left;
+                    lerp.lerpTime = speed;
+                    LerpSetup();
+                }
 
-        //fall if nothing under you
-        if  (moveFinished)
-        {
-            if (hitdown.collider == null) 
-             {
-                falling = true;
-                fallingSpeed = 0.1f;
-                FallingMove();
-                lerp.endPosition = transform.position + Vector3.down;
-                lerp.lerpTime = fallingSpeed;
-                LerpSetup();
             }
-                
-        }
-        else
-        {
-            falling = false;
+
+            //fall if nothing under you
+            if (moveFinished)
+            {
+                if (hitdown.collider == null)
+                {
+                    falling = true;
+                    fallingSpeed = 0.1f;
+                    FallingMove();
+                    lerp.endPosition = transform.position + Vector3.down;
+                    lerp.lerpTime = fallingSpeed;
+                    LerpSetup();
+                }
+
+            }
+            else
+            {
+                falling = false;
+            }
         }
 
     }
