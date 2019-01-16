@@ -19,23 +19,33 @@ public class PlayerController : MonoBehaviour
     RaycastHit2D hitright;
     RaycastHit2D hitleft;
 
+
+    public Vector3 bottomLeft;
+    public Vector3 topRight;
+
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         lerp = GetComponent<LerpHelper>();
         anim = GetComponent<Animator>();
         sp = GetComponent<SpriteRenderer>();
+
+        bottomLeft = new Vector3(0, 0, 0);
+        topRight = new Vector3(50.5f, 110.5f, 0);
     }
 
     void Update()
     {
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, bottomLeft.x, topRight.x), Mathf.Clamp(transform.position.y, bottomLeft.y, topRight.y), transform.position.z);
 
-         hitdown = Physics2D.Raycast(transform.position, Vector2.down, 1);
+        hitdown = Physics2D.Raycast(transform.position, Vector2.down, 1);
         hitup = Physics2D.Raycast(transform.position, Vector2.up, 1);
         hitright = Physics2D.Raycast(transform.position, Vector2.right, 1);
         hitleft = Physics2D.Raycast(transform.position, Vector2.left, 1);
 
         //Animators
+
         if (Input.GetKey(KeyCode.W))
         {
             anim.SetTrigger("startflying");
@@ -45,7 +55,7 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("flying", false);
             anim.ResetTrigger("startflying");
-        }
+         }
 
         if (Input.GetKey(KeyCode.D))
         {
@@ -58,8 +68,13 @@ public class PlayerController : MonoBehaviour
             sp.flipX = true;
             anim.SetBool("digging", true);
         }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            anim.SetBool("downdigging", true);
+        }
         else
         {
+            anim.SetBool("downdigging", false);
             anim.SetBool("digging", false);
         }
 
