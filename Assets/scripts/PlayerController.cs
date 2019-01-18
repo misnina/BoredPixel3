@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private bool falling;
     private float fallingSpeed;
     private float speed = 0.2f;
+    private int dmg;
     public bool canMove = true;
 
     RaycastHit2D hitdown;
@@ -89,7 +90,7 @@ public class PlayerController : MonoBehaviour
             //Fly Up
             if (Input.GetKey(KeyCode.W) && moveFinished)
             {
-
+                dmg = 0;
                 if (hitup.collider == null)
                 {
                     Inventory.instance.fuel--;
@@ -137,7 +138,6 @@ public class PlayerController : MonoBehaviour
                 {
                     Inventory.instance.fuel--;
                     Mineral.instance.Mine(hitright.collider);
-                    Mineral.instance.Mine(hitdown.collider);
                     hitright.collider.GetComponent<Destroy>().destroyed = true;
                     StartMove();
                     lerp.endPosition = transform.position + Vector3.right;
@@ -172,7 +172,6 @@ public class PlayerController : MonoBehaviour
                 {
                     Inventory.instance.fuel--;
                     Mineral.instance.Mine(hitleft.collider);
-                    Mineral.instance.Mine(hitdown.collider);
                     hitleft.collider.GetComponent<Destroy>().destroyed = true;
                     StartMove();
                     lerp.endPosition = transform.position + Vector3.left;
@@ -201,12 +200,23 @@ public class PlayerController : MonoBehaviour
                     lerp.endPosition = transform.position + Vector3.down;
                     lerp.lerpTime = fallingSpeed;
                     LerpSetup();
+                    Debug.Log(dmg);
+                    dmg++;
+
+                } else
+                {
+                    if (dmg > 5)
+                    {
+                        Inventory.instance.health--;
+                        dmg = 0;
+                    } 
                 }
 
             }
             else
             {
                 falling = false;
+
             }
         }
 

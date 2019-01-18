@@ -13,7 +13,7 @@ public class Mineral : MonoBehaviour
 
     public void Mine(Collider2D collider)
     {
-        if ((Inventory.instance.jade + Inventory.instance.cobalt + Inventory.instance.ruby) != Inventory.instance.hold)
+        if ((Inventory.instance.jade + Inventory.instance.cobalt + Inventory.instance.ruby + Inventory.instance.diamond+ Inventory.instance.garnet + Inventory.instance.sapphire) != Inventory.instance.hold)
         {
             if (collider.gameObject.name == "Jade")
             {
@@ -26,9 +26,19 @@ public class Mineral : MonoBehaviour
             else if (collider.gameObject.name == "Ruby")
             {
                 Inventory.instance.ruby++;
-            } else
+            } else if (collider.gameObject.name == "Diamond")
             {
-                //Do Nothing
+                Inventory.instance.diamond++;
+            } else if (collider.gameObject.name == "Garnet")
+            {
+                Inventory.instance.garnet++;
+            } else if (collider.gameObject.name == "Sapphire")
+            {
+                Inventory.instance.sapphire++;
+            }
+            else
+            {
+                Inventory.instance.jade++;
             }
         }
 

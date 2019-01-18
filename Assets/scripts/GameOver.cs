@@ -11,5 +11,10 @@ public class GameOver : MonoBehaviour
         {
             SceneManager.LoadScene("main");
         }
+
+        if(Inventory.instance.health <= 0)
+        {
+            SceneManager.LoadScene("main");
+        }
     }
 }

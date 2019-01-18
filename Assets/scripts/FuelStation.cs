@@ -19,7 +19,7 @@ public class FuelStation : MonoBehaviour
                 else
                 {
                     Inventory.instance.money = cost;
-                    Inventory.instance.fuel Inventory.instance.fuelMax;
+                    Inventory.instance.fuel = Inventory.instance.fuelMax;
 
 
                 }
