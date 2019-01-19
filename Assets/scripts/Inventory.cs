@@ -8,7 +8,7 @@ public class Inventory : MonoBehaviour
     public static Inventory instance;
     public int health = 5;
     public int money;
-    public int fuel;
+    public float fuel;
     public int fuelMax = 100;
     public int jade;
     public int cobalt;

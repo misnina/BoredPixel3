@@ -9,20 +9,12 @@ public class FuelStation : MonoBehaviour
     {
         if(other.gameObject.name == "Player")
         {
-            if (Inventory.instance.money > 0)
+            float cost = Inventory.instance.money - (Inventory.instance.fuelMax - Inventory.instance.fuel);
+            if (cost > 0)
             {
-                int cost = Inventory.instance.money - (Inventory.instance.fuelMax - Inventory.instance.fuel);
-                if (cost <= 0)
-                {
-                    //Do Nothing
-                }
-                else
-                {
-                    Inventory.instance.money = cost;
+                    Inventory.instance.money = (int)cost;
                     Inventory.instance.fuel = Inventory.instance.fuelMax;
-
-
-                }
+                Inventory.instance.health = 5;
             }
             else
             {

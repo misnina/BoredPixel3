@@ -25,6 +25,7 @@ public class UpgradeFuel : MonoBehaviour
         {
             Inventory.instance.money -= cost;
             Inventory.instance.fuelMax = newFuelMax;
+            Inventory.instance.fuel = newFuelMax;
             button.interactable = false;
         }
     }

@@ -21,7 +21,7 @@ public class LerpHelper : MonoBehaviour
     private void Update()
     {
         if (shouldLerp)
-        {
+        {         
             transform.position = Lerp(startPosition, endPosition, timeStartedLerping, lerpTime);
         }
         
