@@ -7,14 +7,16 @@ public class GameOver : MonoBehaviour
 {
     void Update()
     {
-        if(Inventory.instance.fuel <= 0)
+        if(Inventory.instance.fuel <= 0 || Inventory.instance.health <= 0)
         {
-            SceneManager.LoadScene("main");
+            PlayerController.instance.dead = true;
+            Invoke("Death", 0.5f);
+            
         }
+    }
 
-        if(Inventory.instance.health <= 0)
-        {
-            SceneManager.LoadScene("main");
-        }
+    private void Death()
+    {
+        SceneManager.LoadScene("menu");
     }
 }

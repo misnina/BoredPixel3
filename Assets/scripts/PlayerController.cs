@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private float speed = 0.2f;
     private int dmg;
     public bool canMove = true;
+    public bool dead;
 
     RaycastHit2D hitdown;
     RaycastHit2D hitup;
@@ -41,6 +42,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (dead)
+        {
+            anim.SetBool("dead", true);
+        }
+
         if  (canMove)
         {
             transform.position = new Vector3(Mathf.Clamp(transform.position.x, bottomLeft.x, topRight.x), Mathf.Clamp(transform.position.y, bottomLeft.y, topRight.y), transform.position.z);

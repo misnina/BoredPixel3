@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 5
-  money: 300
+  money: 250
   fuel: 80
   fuelMax: 80
   jade: 0

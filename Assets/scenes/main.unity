@@ -3317,7 +3317,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 335762020}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 0, z: 0}
+  m_LocalPosition: {x: 5, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1231619236}
@@ -18097,7 +18097,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.06985378, y: -0.3725586}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -18108,7 +18108,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 1.1617527, y: 1.2548828}
   m_EdgeRadius: 0
 --- !u!114 &1827540348
 MonoBehaviour:
@@ -21704,6 +21704,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Gem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1611656232158388326, guid: bc15ef906f70d2e40bdc5d77c275a566,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1611656232158388327, guid: bc15ef906f70d2e40bdc5d77c275a566,
         type: 3}
