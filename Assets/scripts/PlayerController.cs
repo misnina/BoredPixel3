@@ -92,6 +92,7 @@ public class PlayerController : MonoBehaviour
             //Fly Up
             if (Input.GetKey(KeyCode.W) && moveFinished)
             {
+                AudioManager.instance.PlaySound("fly");
                 flying = true;
                 dmg = 0;
                 if (hitup.collider == null)
@@ -113,7 +114,9 @@ public class PlayerController : MonoBehaviour
             //Dig Down
             if (Input.GetKey(KeyCode.S) && moveFinished && !falling)
             {
+
                 dmg = 0;
+                AudioManager.instance.PlaySound("drill");
                 if (hitdown.collider != null && hitdown.collider.gameObject.tag == "Block")
                 {
                     Inventory.instance.fuel -= 2;
@@ -136,6 +139,7 @@ public class PlayerController : MonoBehaviour
                
                 if (hitright.collider != null && hitright.collider.gameObject.tag == "Block" && !falling && !flying)
                 {
+                    AudioManager.instance.PlaySound("drill");
                     Inventory.instance.fuel -= 2;
                     hitright.collider.GetComponent<Destroy>().destroyed = true;
                     StartMove();
@@ -145,6 +149,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (hitright.collider != null && hitright.collider.gameObject.tag == "Mineral" && !falling && !flying)
                 {
+                    AudioManager.instance.PlaySound("drill");
                     Inventory.instance.fuel -= 2;
                     Mineral.instance.Mine(hitright.collider);
                     hitright.collider.GetComponent<Destroy>().destroyed = true;
@@ -169,6 +174,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (hitleft.collider != null && hitleft.collider.gameObject.tag == "Block" && !falling && !flying)
                 {
+                    AudioManager.instance.PlaySound("drill");
                     Inventory.instance.fuel -= 2;
                     hitleft.collider.GetComponent<Destroy>().destroyed = true;
                     StartMove();
@@ -178,6 +184,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (hitleft.collider != null && hitleft.collider.gameObject.tag == "Mineral" && !falling && !flying)
                 {
+                    AudioManager.instance.PlaySound("drill");
                     Inventory.instance.fuel -= 2;
                     Mineral.instance.Mine(hitleft.collider);
                     hitleft.collider.GetComponent<Destroy>().destroyed = true;
@@ -214,6 +221,7 @@ public class PlayerController : MonoBehaviour
                 {
                     if (dmg > 5)
                     {
+                        AudioManager.instance.PlaySound("damage");
                         Inventory.instance.health--;
                         dmg = 0;
                     } 

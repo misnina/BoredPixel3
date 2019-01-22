@@ -10,6 +10,7 @@ public class GameOver : MonoBehaviour
         if(Inventory.instance.fuel <= 0 || Inventory.instance.health <= 0)
         {
             PlayerController.instance.dead = true;
+            AudioManager.instance.PlaySound("death");
             Invoke("Death", 0.5f);
             
         }

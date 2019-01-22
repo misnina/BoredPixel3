@@ -20,11 +20,13 @@ public class Buttons : MonoBehaviour
 
     public void Menu()
     {
+        AudioManager.instance.PlaySound("upgrade");
         SceneManager.LoadScene("menu");
     }
 
     public void Play()
     {
+        AudioManager.instance.PlaySound("upgrade");
         SceneManager.LoadScene("main");
     }
 
@@ -34,6 +36,7 @@ public class Buttons : MonoBehaviour
         {
             if (i == windowNum)
             {
+                AudioManager.instance.PlaySound("upgrade");
                 windows[i].SetActive(true);
             }
             else

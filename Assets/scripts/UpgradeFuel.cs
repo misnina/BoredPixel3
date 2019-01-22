@@ -23,6 +23,7 @@ public class UpgradeFuel : MonoBehaviour
     {
         if (Inventory.instance.money >= cost)
         {
+            AudioManager.instance.PlaySound("upgrade");
             Inventory.instance.money -= cost;
             Inventory.instance.fuelMax = newFuelMax;
             Inventory.instance.fuel = newFuelMax;
@@ -34,6 +35,7 @@ public class UpgradeFuel : MonoBehaviour
     {
         if (Inventory.instance.money >= cost)
         {
+            AudioManager.instance.PlaySound("upgrade");
             Inventory.instance.money -= cost;
             Inventory.instance.hold = newOreHold;
             button.interactable = false;

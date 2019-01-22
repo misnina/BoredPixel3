@@ -12,12 +12,14 @@ public class FuelStation : MonoBehaviour
             float cost = Inventory.instance.money - (Inventory.instance.fuelMax - Inventory.instance.fuel);
             if (cost > 0)
             {
+                AudioManager.instance.PlaySound("fuel");
                     Inventory.instance.money = (int)cost;
                     Inventory.instance.fuel = Inventory.instance.fuelMax;
                 Inventory.instance.health = 5;
             }
             else
             {
+                AudioManager.instance.PlaySound("fuel");
                 Inventory.instance.fuel += Inventory.instance.money;
                 Inventory.instance.money = 0;
             }
