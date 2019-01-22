@@ -219,12 +219,35 @@ public class PlayerController : MonoBehaviour
 
                 } else
                 {
-                    if (dmg > 5)
+                    if (dmg >= 5 && dmg < 8)
                     {
                         AudioManager.instance.PlaySound("damage");
                         Inventory.instance.health--;
                         dmg = 0;
-                    } 
+                    }
+                    else if (dmg >= 8 && dmg < 10)
+                    {
+                        AudioManager.instance.PlaySound("damage");
+                        Inventory.instance.health -= 2;
+                        dmg = 0;
+                    }
+                    else if (dmg >= 10 && dmg < 13)
+                    {
+                        AudioManager.instance.PlaySound("damage");
+                        Inventory.instance.health -= 3;
+                        dmg = 0;
+                    }
+                    else if (dmg >= 13)
+                    {
+                        AudioManager.instance.PlaySound("damage");
+                        Inventory.instance.health -= 4;
+                        dmg = 0;
+                    }
+                    else
+                    {
+                        Debug.Log(dmg + "5");
+                        //Do nothing
+                    }
                 }
 
             }
