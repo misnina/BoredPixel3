@@ -47,11 +47,11 @@ MonoBehaviour:
   sounds:
   - clipName: death
     clip: {fileID: 8300000, guid: 99b20b853be96094ca62635654412a99, type: 3}
-    volume: 0.01
+    volume: 1
     pitch: 1
   - clipName: damage
     clip: {fileID: 8300000, guid: e327077828f69aa4c9996f6245588517, type: 3}
-    volume: 0.01
+    volume: 0.025
     pitch: 1
   - clipName: fly
     clip: {fileID: 8300000, guid: 6d64af8d22d9fab4287a19c733b0331e, type: 3}
